@@ -1,0 +1,89 @@
+<Window x:Class="FinTracker.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:viewmodels="clr-namespace:FinTracker.ViewModels"
+        Title="FinTracker - Personal Finance Manager"
+        Height="720" Width="1100"
+        MinHeight="600" MinWidth="900"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource BackgroundBrush}">
+
+    <Window.DataContext>
+        <viewmodels:MainViewModel />
+    </Window.DataContext>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="220" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Sidebar navigation panel -->
+        <Border Grid.Column="0" Background="{StaticResource SidebarBrush}">
+            <DockPanel>
+                <!-- Application title at the top of the sidebar -->
+                <StackPanel DockPanel.Dock="Top" Margin="16,24,16,32">
+                    <TextBlock Text="FinTracker"
+                               Foreground="White"
+                               FontSize="22"
+                               FontWeight="Bold" />
+                    <TextBlock Text="Personal Finance Manager"
+                               Foreground="#64748B"
+                               FontSize="11"
+                               Margin="0,4,0,0" />
+                </StackPanel>
+
+                <!-- Navigation section label -->
+                <TextBlock DockPanel.Dock="Top"
+                           Text="NAVIGATION"
+                           Foreground="#475569"
+                           FontSize="10"
+                           FontWeight="Bold"
+                           Margin="24,0,0,8"
+                           LetterSpacing="1" />
+
+                <!-- Navigation buttons -->
+                <StackPanel DockPanel.Dock="Top">
+                    <Button Style="{StaticResource SidebarButtonStyle}"
+                            Command="{Binding NavigateToTransactionsCommand}"
+                            Content="Transactions" />
+
+                    <Button Style="{StaticResource SidebarButtonStyle}"
+                            Command="{Binding NavigateToBudgetsCommand}"
+                            Content="Budgets" />
+
+                    <Button Style="{StaticResource SidebarButtonStyle}"
+                            Command="{Binding NavigateToChartsCommand}"
+                            Content="Charts" />
+                </StackPanel>
+
+                <!-- Spacer to push version info to bottom -->
+                <TextBlock DockPanel.Dock="Bottom"
+                           Text="v1.0.0"
+                           Foreground="#475569"
+                           FontSize="10"
+                           Margin="24,0,0,16"
+                           VerticalAlignment="Bottom" />
+            </DockPanel>
+        </Border>
+
+        <!-- Main content area -->
+        <DockPanel Grid.Column="1">
+            <!-- View title header -->
+            <Border DockPanel.Dock="Top"
+                    Background="{StaticResource CardBrush}"
+                    Padding="24,16"
+                    BorderBrush="#E2E8F0"
+                    BorderThickness="0,0,0,1">
+                <TextBlock Text="{Binding CurrentViewTitle}"
+                           FontSize="20"
+                           FontWeight="SemiBold"
+                           Foreground="{StaticResource TextPrimaryBrush}" />
+            </Border>
+
+            <!-- Dynamic content area that displays the currently selected view -->
+            <ContentControl Content="{Binding CurrentView}"
+                            Margin="24,16" />
+        </DockPanel>
+    </Grid>
+</Window>
